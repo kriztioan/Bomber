@@ -2,8 +2,8 @@ PROG:=bomber
 PLATFORM:=$(shell uname -s)
 CPP_FILES:=$(wildcard *.c) $(wildcard sound/$(PLATFORM)/*.c)
 OBJ_FILES:=$(patsubst %.c,%.o,$(CPP_FILES))
-CPPFLAGS:=-w -I ./include -I /opt/X11/include
-LIBS:=-lX11
+CPPFLAGS:=-w -I./include -I/opt/X11/include
+LIBS:=-L/opt/X11/lib -lX11
 FRAMEWORKS:=
 ifeq ($(PLATFORM),Darwin)
 	FRAMEWORKS+=-framework AudioUnit
