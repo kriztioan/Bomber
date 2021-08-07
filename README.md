@@ -2,6 +2,8 @@
 
 `Bomber` is a popular multiplayer clone of [Bomberman](https://en.wikipedia.org/wiki/Bomberman) from David Ashley written for the `X11` windowing system. This version has been adapted to also work with `MacOS` sound and offers several other enhancements, e.g., score counting, extra bonuses, ... `Bomber` is written in `C`. David Ashley's original code is licensed under the GPL and the message accompanying his initial release can be found in  [DASH.txt](DASH.txt). `Bomber` will run on Linux and MacOS, where the former requires `OSS` support for sound, and the latter the [XQuartz](https://www.xquartz.org) `X11` window manager installed.
 
+![Bomber in Action](Bomber.png "Bomber in Action")
+
 ## Usage
 
 `Bomber` is compiled with:
