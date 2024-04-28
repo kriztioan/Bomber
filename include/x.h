@@ -1,4 +1,3 @@
-
 #ifndef BOMBER_X_H
 #define BOMBER_X_H
 
@@ -64,7 +63,7 @@ extern void scaninput();
 extern void fontinit();
 extern void writechar(int x,int y,uchar ch);
 extern void clear();
-extern void xflush(); 
+extern void xflush();
 extern void xsync();
 extern void drawbox(int x,int y,int size,int color);
 extern void drawbox2(int x,int y,int sizex,int sizey,int color);
@@ -79,7 +78,14 @@ extern void colormapoff();
 extern void palette(uchar *pal);
 extern void drawfigure(int x,int y,figure *fig);
 extern void drawfigureany(int x,int y,figure *fig,figure *dest);
-void solidcopy(figure *fig,int destx,int desty,int sizex,int sizey);
-void solidcopyany(figure *fig,figure *dest,int destx,int desty,int sizex,int sizey);
+extern void solidcopy(figure *fig,int destx,int desty,int sizex,int sizey);
+extern void solidcopyany(figure *fig,figure *dest,int destx,int desty,int sizex,int sizey);
+extern void solidfetch(gfxset *gs, figure *fig);
+extern void clearrect(int x, int y, int xsize, int ysize);
+extern void greyrect(int x, int y, int xsize, int ysize);
+extern void scaninput();
+extern int takedown();
+extern int getspace(figure *fig);
+extern int allocgfxres();
 
 #endif // BOMBER_X_H

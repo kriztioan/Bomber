@@ -549,7 +549,7 @@ allocgfxres() {
   return 0;
 }
 
-getspace(figure *fig) {
+int getspace(figure *fig) {
   int xsize, ysize;
   int i;
   gfxres *gr;
@@ -683,7 +683,7 @@ void scaninput() {
     }
 }
 
-greyrect(int x, int y, int xsize, int ysize) {
+void greyrect(int x, int y, int xsize, int ysize) {
   static int greycolor = -1;
   if (greycolor == -1)
     greycolor = map2[bestmatch(0, 0, 0x70)];

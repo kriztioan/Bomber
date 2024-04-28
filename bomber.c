@@ -7,11 +7,11 @@
  *
  ***********************************************/
 
-#include "bomber.h"
-#include "x.h"
+#include <bomber.h>
+#include <x.h>
 #include <arpa/inet.h>
 #include <fcntl.h>
-#include <math.h>
+#include <stdio.h>
 #include <netdb.h>
 #include <netinet/in.h>
 #include <signal.h>
@@ -24,6 +24,7 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <unistd.h>
+#include <ctype.h>
 
 #define FRACTION 10
 #define MAXMSG 4096
@@ -194,6 +195,19 @@ void reverse(char s[]);
 void itoa(int n, char s[]);
 void initscores();
 void drawscore();
+void update();
+int arraytoscreenx(int x);
+int arraytoscreeny(int y);
+int tovideox(int x);
+int tovideoy(int y);
+int dopcxreal(char *name, gfxset *gs);
+int centerychange(player *pl);
+int centerxchange(player *pl);
+int scaninvite(int size);
+int  iterate();
+extern soundinit(const char * dev);
+extern playsound(int sound);
+extern endsound();
 
 void reverse(char s[]) {
   int c, i, j;
@@ -223,7 +237,7 @@ void drawscore() {
   int idx = 0, i, deltaX = 83;
   char score[3], name[4];
 
-  pl = activeplayers.next;
+  pl = (player*) activeplayers.next;
   while (pl) {
 
     if (network)
@@ -273,13 +287,13 @@ int myrand1() {
   return val;
 }
 
-myrand() {
+int myrand() {
   int v;
   v = myrand1();
   return (v << 8) | myrand1();
 }
 
-initmyrand() {
+void initmyrand() {
   int i, j;
   char *p;
   int msb, msk;
@@ -807,7 +821,8 @@ void clearsprites() {
   }
 }
 void clearspritelist() { spritesused = 0; }
-update() {
+
+void update() {
   int i;
   damage *dm;
   dm = damages;
