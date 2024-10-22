@@ -7,15 +7,15 @@
  *
  ***********************************************/
 
-#include <bomber.h>
-#include <x.h>
 #include <arpa/inet.h>
+#include <bomber.h>
+#include <ctype.h>
 #include <fcntl.h>
-#include <stdio.h>
 #include <netdb.h>
 #include <netinet/in.h>
 #include <signal.h>
 #include <stdarg.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
@@ -24,7 +24,7 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <unistd.h>
-#include <ctype.h>
+#include <x.h>
 
 #define FRACTION 10
 #define MAXMSG 4096
@@ -204,10 +204,10 @@ int dopcxreal(char *name, gfxset *gs);
 int centerychange(player *pl);
 int centerxchange(player *pl);
 int scaninvite(int size);
-int  iterate();
-extern soundinit(const char * dev);
-extern playsound(int sound);
-extern endsound();
+int iterate();
+extern void soundinit(const char *dev);
+extern void playsound(int sound);
+extern void endsound();
 
 void reverse(char s[]) {
   int c, i, j;
@@ -228,16 +228,14 @@ void itoa(int n, char s[]) {
   reverse(s);
 }
 
-void initscores() {
-  bzero(scores, MAXNETNODES);
-}
+void initscores() { bzero(scores, MAXNETNODES); }
 
 void drawscore() {
   player *pl;
   int idx = 0, i, deltaX = 83;
   char score[3], name[4];
 
-  pl = (player*) activeplayers.next;
+  pl = (player *)activeplayers.next;
   while (pl) {
 
     if (network)
@@ -385,7 +383,8 @@ void sendactions(int which, int frame) {
   memmove(msg + 9, actions, MAXNETNODES);
   putmsg(&netnodes[which].netname, msg, MAXNETNODES + 9);
 }
-sendmine(int frame) {
+
+void sendmine(int frame) {
   char msg[64];
   *msg = PKT_MYDATA;
   memmove(msg + 1, regpacket + 1, 4);
@@ -397,7 +396,7 @@ sendmine(int frame) {
   putmsg(&HOSTname, msg, 10);
 }
 int informsize;
-buildinform(unsigned char type) {
+int buildinform(unsigned char type) {
   unsigned char *put;
   int i;
   int size;
@@ -564,13 +563,13 @@ void thandler(int val) {
   hc++;
 }
 
-freegfxset(gfxset *gs) {
+void freegfxset(gfxset *gs) {
   if (gs->gs_pic)
     free(gs->gs_pic);
   gs->gs_pic = 0;
 }
 
-nomem(char *str) {
+void nomem(char *str) {
   printf("No memory!!![%s]\n", str);
   exit(1);
 }
@@ -593,7 +592,8 @@ void getgroup(char *name, gfxset *colorgs, figure *fig, int count) {
   }
   freegfxset(&gs);
 }
-getsingle(char *name, figure *fig, int count) {
+
+void getsingle(char *name, figure *fig, int count) {
   gfxset gs;
   int err;
   err = dopcx(name, &gs);
@@ -625,7 +625,7 @@ void loadfonts(void) {
     asciiremap[*p++] = i++;
 }
 
-loadgfx() {
+void loadgfx() {
   gfxset *gs;
   gfxset *colorgs;
   int err;
@@ -656,7 +656,7 @@ loadgfx() {
     if (err)
       continue;
   }
-
+  clear();
   loadfonts();
   texthome();
   bigscrprintf("XBOMBER ");
@@ -2586,11 +2586,11 @@ void domode6() {
   }
 }
 
-int (*modefunctions[])() = {
+void (*modefunctions[])() = {
     domode0, domode1, domode2, domode3, domode4, domode5, domode6,
 };
 
-domode() { modefunctions[gamemode](); }
+void domode() { modefunctions[gamemode](); }
 
 void addscore();
 

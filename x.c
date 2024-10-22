@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "x.h"
+#include <x.h>
 #define MAXCOLORS 256
 
 Display *dp;
@@ -52,7 +52,7 @@ int mxpos, mypos;
 
 int pressedcodes[KEYMAX], downcodes[KEYMAX], numpressed, numdown;
 
-xtest(int n) {
+void xtest(int n) {
   n %= resourcesused;
   XCopyArea(dp, gfxresources[n].graphics, offscreen, copygc, 0, 0, 512, 480, 0,
             0);
@@ -520,7 +520,7 @@ void openx(int argc, char **argv) {
   }
 }
 
-allocgfxres() {
+int allocgfxres() {
   int depth;
   Pixmap graphics, mask;
 
