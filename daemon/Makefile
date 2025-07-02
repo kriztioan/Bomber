@@ -1,7 +1,12 @@
-PROG:=../matcherd
+PROGS:=../matcherd
 CPP_FILES:=$(wildcard *.c)
 OBJ_FILES:=$(patsubst %.c,%.o,$(CPP_FILES))
-CPPFLAGS:=-w
+DEP_FILES:=deps.d
+CPPFLAGS:=-w -MMD -MF $(DEP_FILES)
+
+all: $(PROGS)
+
+-include $(DEP_FILES)
 
 $(PROG): $(OBJ_FILES)
 	$(CC) -o $(PROG) $(OBJ_FILES)
@@ -10,4 +15,4 @@ $(PROG): $(OBJ_FILES)
 	$(CC) -c $< $(CPPFLAGS)
 
 clean:
-	$(RM) *.o $(PROG)
+	$(RM) $(DEP_FILES) $(OBJ_FILES) $(PROG)
